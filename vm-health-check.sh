@@ -1,46 +1,45 @@
 #!/bin/bash
 
-# vm-health-check.sh
-# A script to check the health of the virtual machine including CPU, disk space, memory usage.
+# VM Health Check Script
+echo "===================================="
+echo "          VM Health Check           "
+echo "===================================="
+echo "Current Date and Time (UTC): $(date -u)"
 
-# Function to display CPU information
-check_cpu() {
-    echo "CPU Info:"
-    lscpu | grep 'Model name'
-    echo
-}
+# CPU Check
+echo "------------------------------------"
+echo "CPU Usage:"
+# 'top' command displays CPU usage, with '-b' for batch mode and '-n1' for one iteration
+echo "Top command output for CPU usage:"
+top -b -n1 | grep "Cpu(s)"
 
-# Function to display disk space usage
-check_disk() {
-    echo "Disk Space Usage:"
-    df -h
-    echo
-}
+# Memory Check
+echo "------------------------------------"
+echo "Memory Usage:"
+# 'free -h' shows memory usage in human-readable format
+echo "Free command output for memory usage:"
+free -h
 
-# Function to display memory usage
-check_memory() {
-    echo "Memory Usage:"
-    free -h
-    echo
-}
+# Disk Usage
+echo "------------------------------------"
+echo "Disk Usage:"
+# 'df -h' shows disk space usage in human-readable format
+echo "DF command output for disk usage:"
+df -h
 
-# Display script explanation
-show_explanation() {
-    echo "This script checks the following VM health metrics:" 
-    echo "- CPU Information"
-    echo "- Disk Space Usage"
-    echo "- Memory Usage"
-}
+# Network Check
+echo "------------------------------------"
+echo "Network Status:"
+# 'ifconfig' or 'ip addr' displays network interfaces status
+echo "Ifconfig command output for network status:"
+ifconfig
 
-# Check for command line arguments
-if [ "$#" -eq 1 ]; then
-    if [ "$1" == "explain" ]; then
-        show_explanation
-    else
-        echo "Invalid argument. Use 'explain' to understand script usage."
-    fi
-else
-    check_cpu
-    check_disk
-    check_memory
-fi
+# Running Processes
+echo "------------------------------------"
+echo "Running Processes:"
+# 'ps aux' lists all running processes
+echo "PS command output for running processes:"
+ps aux
+echo "===================================="
+echo "          End of Report             "
+echo "===================================="
